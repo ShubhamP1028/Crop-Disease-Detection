@@ -7,6 +7,9 @@ Welcome to the Crop Disease Detection project! This repository contains the code
 Have you ever wondered if an AI could tell a healthy leaf from a sick one just by looking at it? That's what this project is all about. We've built a powerful image classification model that can instantly recognize and diagnose common plant diseases.
 
 ### 💻 Project Highlights
+
+<b>Dataset</b> : PlantVillage-Dataset ➡️ https://github.com/spMohanty/PlantVillage-Dataset
+
 <b>Model</b>: We've used a Convolutional Neural Network (CNN), the go-to architecture for image classification. The notebook includes a custom-built CNN as well as a more advanced transfer learning approach using a pre-trained EfficientNetB0 model.
 
 <b>Data Augmentation: To make our model more robust, we've applied extensive data augmentation techniques. This means we artificially expanded our dataset by rotating, flipping, and zooming into images, teaching the model to recognize diseases from all angles.
@@ -23,6 +26,8 @@ Have you ever wondered if an AI could tell a healthy leaf from a sick one just b
 
 ### 🚀 Getting Started
 Ready to explore the code? The heart of this project is the CropDiseaseDetection.ipynb Jupyter Notebook.
+
+To download the model : https://drive.google.com/file/d/1wo2emgwSwMDEUv4svqiNhw1clWtKaBf8/view?usp=sharing
 
 To run the project locally:
 
