@@ -27,8 +27,8 @@ Have you ever wondered if an AI could tell a healthy leaf from a sick one just b
 ---
 
 ### 📉 Model Performance & Evaluation
-<img width="300" alt="PlantDisease1" src="https://github.com/user-attachments/assets/035caa96-f9df-4834-9db8-bcadd172065d" />
-<img width="300" alt="Plantdisease2" src="https://github.com/user-attachments/assets/85be54d2-8982-4625-92bb-8f75f8b0310b" />
+<img width="400" alt="PlantDisease1" src="https://github.com/user-attachments/assets/035caa96-f9df-4834-9db8-bcadd172065d" />
+<img width="400" alt="Plantdisease2" src="https://github.com/user-attachments/assets/85be54d2-8982-4625-92bb-8f75f8b0310b" />
 
 <b>At last epoch these are the metrics ⏬ </b>
 <table>
