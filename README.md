@@ -24,6 +24,21 @@ Have you ever wondered if an AI could tell a healthy leaf from a sick one just b
 
 <b>ImageDataGenerator: Our workhorse for efficient data preprocessing and loading.</b>
 
+---
+
+### 📉 Model Performance & Evaluation
+<img width="500" alt="PlantDisease1" src="https://github.com/user-attachments/assets/035caa96-f9df-4834-9db8-bcadd172065d" />
+<img width="500" alt="Plantdisease2" src="https://github.com/user-attachments/assets/85be54d2-8982-4625-92bb-8f75f8b0310b" />
+
+<b>At last epoch these are the metrics ⏬ </b>
+<table>
+  <tr><th>accuracy</th><td> 0.8125 </td></tr>
+  <tr><th> loss</th><td> 0.5851 </td></tr>
+  <tr><th> val_accuracy</th><td> 0.8138 </td></tr>
+  <tr><th> val_loss</th><td> 0.5858</td></tr>
+</table>
+
+---
 ### 🚀 Getting Started
 Ready to explore the code? The heart of this project is the CropDiseaseDetection.ipynb Jupyter Notebook.
 
