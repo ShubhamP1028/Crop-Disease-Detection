@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Plant Disease Detector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(90deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .status-bar {
+            background: #f8f9fa;
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .model-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        
+        .status-active {
+            background-color: #28a745;
+        }
+        
+        .status-inactive {
+            background-color: #dc3545;
+        }
+        
+        .upload-section {
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .upload-area {
+            border: 2px dashed #4CAF50;
+            border-radius: 10px;
+            padding: 40px;
+            margin: 20px 0;
+            background: #f9f9f9;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .upload-area:hover {
+            background: #f0f7f0;
+            border-color: #3e8e41;
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .upload-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .upload-btn:hover {
+            background: #3e8e41;
+        }
+        
+        .result-section {
+            padding: 0 30px 30px;
+        }
+        
+        .result-header {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2c3e50;
+        }
+        
+        .result-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .image-container {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .prediction-container {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .prediction-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .prediction-label {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .confidence-meter {
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50 0%, #8BC34A 100%);
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+        }
+        .confidence-text {
+            text-align: right;
+            font-weight: 500;
+            color: #495057;
+        }
+        
+        .scores-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .scores-table th, .scores-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .scores-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .scores-table tr:hover {
+            background-color: #f1f3f5;
+        }
+        
+        .try-again {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .try-again-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .try-again-btn:hover {
+            background: #5a6268;
+        }
+        footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .error-message {
+            background: #ffe6e6;
+            color: #d33;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .result-content {
+                flex-direction: column;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .upload-area {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-leaf"></i> Plant Disease Detector</h1>
+            <p>Upload an image of a plant leaf to detect potential diseases</p>
+        </header>
+        
+        <div class="status-bar">
+            <div class="model-status">
+                <span class="status-indicator {% if model_loaded %}status-active{% else %}status-inactive{% endif %}"></span>
+                <span>Model: {% if model_loaded %}{{ model_type|upper }}{% else %}Not Loaded{% endif %}</span>
+            </div>
+            <div>Labels: {{ label_map|length }} classes</div>
+        </div>
+        
+        <div class="upload-section">
+            <h2>Upload Leaf Image</h2>
+            <p>Supported formats: JPG, PNG, JPEG</p>
+            
+            <form method="post" action="/predict" enctype="multipart/form-data" id="uploadForm">
+                <label class="upload-area" id="dropArea">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <p>Drag & drop your image here or click to browse</p>
+                    <input type="file" name="file" accept="image/*" class="file-input" id="fileInput" required />
+                    <button type="button" class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                        <i class="fas fa-upload"></i> Select Image
+                    </button>
+                </label>
+            </form>
+        </div>
+        
+        {% if error %}
+        <div class="error-message">
+            <p><i class="fas fa-exclamation-circle"></i> Error: {{ error }}</p>
+        </div>
+        {% endif %}
+        
+        {% if result %}
+        <div class="result-section" id="resultSection">
+            <div class="result-header">
+                <h2>Analysis Results</h2>
+            </div>
+            
+            <div class="result-content">
+                <div class="image-container">
+                    <img src="data:image/png;base64,{{ image_b64 }}" alt="Uploaded leaf image" />
+                </div>
+                
+                <div class="prediction-container">
+                    <div class="prediction-card">
+                        <div class="prediction-label">{{ result.label }}</div>
+                        <div class="confidence-meter">
+                            <div class="confidence-fill" style="width: 70%"></div>
+                        </div>
+                        <div class="confidence-text">{{ (result.confidence * 100)|round(2) }}% confidence</div>
+                    </div>
+                    
+                    <h3>Top Predictions</h3>
+                    <table class="scores-table">
+                        <thead>
+                            <tr>
+                                <th>Disease</th>
+                                <th>Confidence</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for lab, score in result.scores %}
+                            <tr>
+                                <td>{{ lab }}</td>
+                                <td>{{ (score * 100)|round(2) }}%</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="try-again">
+                <button class="try-again-btn" onclick="resetForm()">
+                    <i class="fas fa-redo"></i> Analyze Another Image
+                </button>
+            </div>
+        </div>
+        {% endif %}
+        
+        <footer>
+            <p>Plant Disease Detection System | Made by <a href="https://www.linkedin.com/in/shubham1028"><b>Shubham Pandey</b></a></p>
+        </footer>
+    </div>
+    <script>
+        // Handle file selection
+        document.getElementById('fileInput').addEventListener('change', function() {
+            if (this.files.length > 0) {
+                document.getElementById('uploadForm').submit();
+            }
+        });
+        
+        // Drag and drop functionality
+        const dropArea = document.getElementById('dropArea');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight() {
+            dropArea.style.backgroundColor = '#e8f5e8';
+            dropArea.style.borderColor = '#3e8e41';
+        }
+        
+        function unhighlight() {
+            dropArea.style.backgroundColor = '#f9f9f9';
+            dropArea.style.borderColor = '#4CAF50';
+        }
+        
+        dropArea.addEventListener('drop', handleDrop, false);
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            document.getElementById('fileInput').files = files;
+            
+            if (files.length > 0) {
+                document.getElementById('uploadForm').submit();
+            }
+        }
+        
+        // Reset form function
+        function resetForm() {
+            document.getElementById('uploadForm').reset();
+            window.location.href = "/";
+        }
+        
+        // Animate confidence meter on page load
+        window.addEventListener('load', function() {
+            const confidenceFill = document.querySelector('.confidence-fill');
+            if (confidenceFill) {
+                // Get the width from the inline style
+                const confidenceValue = confidenceFill.style.width;
+                // Reset width for animation
+                confidenceFill.style.width = '0%';
+                
+                // Animate after a short delay
+                setTimeout(() => {
+                    confidenceFill.style.width = confidenceValue;
+                }, 300);
+            }
+        });
+    </script>
+</body>
+</html>
