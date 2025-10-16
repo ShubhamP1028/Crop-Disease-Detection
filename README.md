@@ -2,6 +2,9 @@
 ### 🌱 From Pixels to Diagnosis: The Crop Guardian AI 🌱
 Welcome to the Crop Disease Detection project! This repository contains the code for an intelligent system that uses deep learning to identify diseases in plant leaves, helping farmers and botanists protect their crops and increase yields.
 
+<img width="1378" height="946" alt="Screenshot 2025-10-16 165633" src="https://github.com/user-attachments/assets/cb020028-338d-464d-9f8f-9e593bb35059" />
+
+
 <img width="2164" height="2114" alt="image" src="https://github.com/user-attachments/assets/967dbf9f-2f60-41d0-aa23-dbdbe95b03b3" />
 
 Have you ever wondered if an AI could tell a healthy leaf from a sick one just by looking at it? That's what this project is all about. We've built a powerful image classification model that can instantly recognize and diagnose common plant diseases.
