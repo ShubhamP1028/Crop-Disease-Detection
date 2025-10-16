@@ -45,9 +45,15 @@ Have you ever wondered if an AI could tell a healthy leaf from a sick one just b
 ### 🚀 Getting Started
 Ready to explore the code? The heart of this project is the CropDiseaseDetection.ipynb Jupyter Notebook.
 
-To download the model : https://drive.google.com/file/d/1wo2emgwSwMDEUv4svqiNhw1clWtKaBf8/view?usp=sharing
-
 To run the project locally:
+
+Docker Pull:
+
+```bash
+docker pull newbieshubham/crop-disease-detection:latest
+
+docker run -d -p 5030:5030 newbieshubham/crop-disease-detection:latest
+```
 
 Clone the Repository:
 
