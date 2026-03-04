@@ -1,0 +1,749 @@
+/* ===========================
+   CSS Variables - Color Palette
+   =========================== */
+:root {
+  /* Background Colors */
+  --bg-primary: #2b2d31;           /* Charcoal/dark gray */
+  --bg-secondary: #1e1f22;         /* Darker shade for contrast */
+  
+  /* Glass Effect */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: rgba(0, 0, 0, 0.37);
+  
+  /* Nature Green Accent */
+  --accent-primary: #4CAF50;       /* Medium-tone nature green */
+  --accent-hover: #45a049;         /* Darker green for hover */
+  --accent-light: #81C784;         /* Lighter green for highlights */
+  
+  /* Text Colors */
+  --text-primary: #2c3e50;         /* Dark gray for main text */
+  --text-secondary: #6c757d;       /* Lighter gray for secondary */
+  --text-light: #ffffff;           /* White for dark backgrounds */
+  
+  /* Status Colors */
+  --risk-low: #4CAF50;
+  --risk-medium: #FFC107;
+  --risk-high: #F44336;
+}
+
+/* ===========================
+   Base Styles
+   =========================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-light);
+  min-height: 100vh;
+}
+
+/* ===========================
+   App Container - Mobile First
+   =========================== */
+.app-container {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ===========================
+   Screen Management
+   =========================== */
+.screen {
+  display: none;
+  flex: 1;
+  padding: 16px;
+  padding-bottom: 80px; /* Space for bottom nav */
+}
+
+.screen.active {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===========================
+   Glassmorphism Base Styles
+   =========================== */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px 0 var(--glass-shadow);
+  padding: 24px;
+}
+
+/* Fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: blur(10px)) {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.85);
+  }
+}
+
+/* ===========================
+   Top Bar Component
+   =========================== */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.user-greeting {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+}
+
+.greeting-text h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.notification-bell {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.notification-bell:hover {
+  transform: scale(1.1);
+}
+
+/* ===========================
+   Carousel Component
+   =========================== */
+.carousel-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  padding: 32px 24px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-container {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.carousel-item {
+  min-width: 100%;
+  text-align: center;
+}
+
+.carousel-item h3 {
+  font-size: 24px;
+  margin-bottom: 12px;
+  color: var(--text-light);
+}
+
+.carousel-item p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.scan-now-btn {
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.scan-now-btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+}
+
+.paging-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.dot.active {
+  background: var(--accent-primary);
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* ===========================
+   Recent Scans Component
+   =========================== */
+.recent-section {
+  margin-top: 24px;
+}
+
+.recent-section h3 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  color: var(--text-light);
+}
+
+.recent-scan-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  padding: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.recent-scan-card:hover {
+  transform: translateX(4px);
+  border-color: var(--accent-primary);
+}
+
+.scan-thumbnail {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: var(--bg-secondary);
+}
+
+.scan-info {
+  flex: 1;
+}
+
+.scan-info h4 {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.scan-info .plant-type {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.scan-info .timestamp {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* ===========================
+   Bottom Navigation
+   =========================== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 480px;
+  width: 100%;
+  background: var(--bg-secondary);
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 1000;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  color: var(--text-secondary);
+}
+
+.nav-item.active {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.nav-item i {
+  font-size: 20px;
+}
+
+.nav-item span {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* ===========================
+   Camera Screen Styles
+   =========================== */
+.camera-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.back-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-light);
+  transition: all 0.3s;
+}
+
+.back-btn:hover {
+  background: var(--accent-primary);
+}
+
+.camera-header h2 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.viewfinder {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: var(--bg-secondary);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  border: 2px solid var(--glass-border);
+}
+
+.viewfinder video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.viewfinder-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 70%;
+  border: 2px solid var(--accent-primary);
+  border-radius: 12px;
+}
+
+.viewfinder-overlay::before,
+.viewfinder-overlay::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 3px solid var(--accent-primary);
+}
+
+.viewfinder-overlay::before {
+  top: -3px;
+  left: -3px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.viewfinder-overlay::after {
+  bottom: -3px;
+  right: -3px;
+  border-left: none;
+  border-top: none;
+}
+
+.progress-indicator {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  font-size: 14px;
+}
+
+.cancel-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 50px;
+  background: transparent;
+  border: 2px solid var(--accent-primary);
+  color: var(--accent-primary);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.cancel-btn:hover {
+  background: var(--accent-primary);
+  color: white;
+}
+
+/* ===========================
+   Result Screen Styles
+   =========================== */
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.result-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.more-options {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.result-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.result-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.disease-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-light);
+  margin-bottom: 8px;
+}
+
+.plant-type {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.scan-time {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.treatment-section {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.treatment-section h3 {
+  font-size: 18px;
+  color: var(--text-light);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.treatment-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.treatment-section li {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.treatment-section li:last-child {
+  border-bottom: none;
+}
+
+.treatment-section li i {
+  color: var(--accent-primary);
+  margin-right: 8px;
+}
+
+/* ===========================
+   Risk Indicator Styles
+   =========================== */
+.risk-section {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.risk-section h3 {
+  font-size: 18px;
+  color: var(--text-light);
+  margin-bottom: 16px;
+}
+
+.risk-bar-container {
+  position: relative;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+.risk-bar-fill {
+  position: absolute;
+  height: 100%;
+  background: linear-gradient(to right, var(--risk-low), var(--risk-medium), var(--risk-high));
+  border-radius: 4px;
+  width: 100%;
+}
+
+.risk-marker {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: left 0.5s ease-in-out;
+}
+
+.risk-marker.low {
+  background: var(--risk-low);
+}
+
+.risk-marker.medium {
+  background: var(--risk-medium);
+}
+
+.risk-marker.high {
+  background: var(--risk-high);
+}
+
+.risk-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+}
+
+.expert-note {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid var(--accent-primary);
+  padding: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 12px;
+}
+
+.expert-note-icon {
+  color: var(--accent-primary);
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.expert-note-content {
+  flex: 1;
+}
+
+.expert-note-content h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+
+.expert-note-content p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ===========================
+   Action Buttons
+   =========================== */
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.regenerate-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: 50px;
+  background: white;
+  border: 2px solid var(--accent-primary);
+  color: var(--accent-primary);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.regenerate-btn:hover {
+  background: var(--accent-light);
+  color: white;
+  border-color: var(--accent-light);
+}
+
+.share-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: 50px;
+  background: var(--accent-primary);
+  border: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.share-btn:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+}
+
+/* ===========================
+   Error Toast Animations
+   =========================== */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+}
+
+.error-toast {
+  animation: slideDown 0.3s ease-out;
+}

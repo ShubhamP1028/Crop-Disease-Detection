@@ -1,0 +1,173 @@
+{
+  "Apple___Apple_scab": {
+    "disease": "Apple Scab",
+    "steps": [
+      "Prune and destroy infected leaves and twigs during dormant season.",
+      "Apply a recommended fungicide at green tip, pink, and petal-fall stages.",
+      "Remove fallen leaves from the orchard floor to reduce inoculum.",
+      "Avoid overhead irrigation that keeps foliage wet for long periods."
+    ],
+    "prevention": [
+      "Plant resistant apple varieties where available.",
+      "Maintain good air circulation by proper pruning and spacing.",
+      "Avoid excessive nitrogen fertilization that encourages dense foliage.",
+      "Monitor orchards regularly, especially in wet spring conditions."
+    ],
+    "expertNote": "Apple scab thrives in cool, wet weather. Early-season protection is critical to prevent multiple infection cycles.",
+    "severity": "Medium"
+  },
+  "Apple___Black_rot": {
+    "disease": "Apple Black Rot",
+    "steps": [
+      "Remove and destroy mummified fruit and cankered branches.",
+      "Prune back affected limbs to healthy tissue and disinfect tools.",
+      "Apply appropriate fungicides during early fruit development stages.",
+      "Improve orchard sanitation by removing dead wood and prunings."
+    ],
+    "prevention": [
+      "Avoid leaving pruned branches or mummies in or near the orchard.",
+      "Maintain tree vigor through balanced fertilization and watering.",
+      "Inspect trees regularly for early signs of cankers and fruit infections.",
+      "Choose planting sites with good air drainage and sun exposure."
+    ],
+    "expertNote": "Black rot can overwinter in cankers and mummified fruit; sanitation is one of the most effective management strategies.",
+    "severity": "High"
+  },
+  "Grape___Black_rot": {
+    "disease": "Grape Black Rot",
+    "steps": [
+      "Remove and destroy infected leaves, shoots, and mummified berries.",
+      "Apply fungicides at early shoot growth, pre-bloom, and post-bloom as needed.",
+      "Train vines to improve air movement and light penetration.",
+      "Avoid overhead irrigation that prolongs leaf wetness."
+    ],
+    "prevention": [
+      "Use resistant or tolerant grape cultivars where possible.",
+      "Maintain clean vineyard floors, removing dropped fruit and debris.",
+      "Prune annually to keep canopy open and well-structured.",
+      "Monitor weather conditions and apply fungicides preventively in wet seasons."
+    ],
+    "expertNote": "Black rot infections often start on young tissues. Protecting early-season growth greatly reduces later fruit loss.",
+    "severity": "High"
+  },
+  "Grape___Esca_(Black_Measles)": {
+    "disease": "Grape Esca (Black Measles)",
+    "steps": [
+      "Remove and destroy severely affected vines when practical.",
+      "Prune during dry weather and avoid large pruning wounds.",
+      "Protect pruning cuts with wound sealants where recommended.",
+      "Improve vine vigor with balanced nutrition and proper irrigation."
+    ],
+    "prevention": [
+      "Avoid mechanical injuries to trunks and cordons.",
+      "Practice good pruning hygiene by disinfecting tools between vines.",
+      "Remove and burn old, dead wood that can harbor pathogens.",
+      "Use certified clean planting material when establishing new vineyards."
+    ],
+    "expertNote": "Esca is a complex trunk disease; management focuses on prevention, vine vigor, and removal of heavily diseased plants.",
+    "severity": "High"
+  },
+  "Orange___Haunglongbing_(Citrus_greening)": {
+    "disease": "Citrus Greening (Haunglongbing)",
+    "steps": [
+      "Remove and destroy trees confirmed with severe greening symptoms.",
+      "Control psyllid vectors using recommended insecticides and biological control.",
+      "Prune only lightly to reduce stress on infected trees.",
+      "Follow local regulatory guidelines for sampling and disposal."
+    ],
+    "prevention": [
+      "Plant only certified disease-free nursery stock.",
+      "Implement area-wide psyllid management with neighboring growers.",
+      "Monitor trees frequently for early symptoms and psyllid presence.",
+      "Keep groves weed-free to reduce alternative hosts for the vector."
+    ],
+    "expertNote": "Citrus greening is highly destructive and currently has no cure; vector management and use of healthy planting material are essential.",
+    "severity": "High"
+  },
+  "Potato___Late_blight": {
+    "disease": "Potato Late Blight",
+    "steps": [
+      "Remove and destroy infected foliage and tubers immediately.",
+      "Apply protectant fungicides before favorable weather and repeat as needed.",
+      "Avoid overhead irrigation and irrigate early in the day when necessary.",
+      "Harvest promptly once vines are killed to limit tuber infection."
+    ],
+    "prevention": [
+      "Use certified seed potatoes with known disease resistance.",
+      "Avoid planting potatoes near cull piles or volunteer potatoes.",
+      "Ensure good field drainage to reduce prolonged leaf wetness.",
+      "Rotate away from potatoes and tomatoes for at least 2–3 years."
+    ],
+    "expertNote": "Late blight can spread extremely rapidly in cool, wet conditions. Proactive fungicide programs and sanitation are critical.",
+    "severity": "High"
+  },
+  "Corn_(maize)___Northern_Leaf_Blight": {
+    "disease": "Corn Northern Leaf Blight",
+    "steps": [
+      "Apply fungicides at tasseling or early silking when disease pressure is high.",
+      "Remove and incorporate crop residues after harvest to speed decomposition.",
+      "Improve field drainage and avoid excessive plant density.",
+      "Scout fields regularly, especially lower canopy leaves, for early lesions."
+    ],
+    "prevention": [
+      "Plant resistant hybrids adapted to the local region.",
+      "Rotate with non-host crops to reduce inoculum levels.",
+      "Avoid continuous corn in high-risk fields.",
+      "Manage nitrogen to support healthy growth without promoting dense canopies."
+    ],
+    "expertNote": "Northern leaf blight slows photosynthesis and can reduce yield significantly when upper leaves are heavily infected before grain fill.",
+    "severity": "High"
+  },
+  "Tomato___Late_blight": {
+    "disease": "Tomato Late Blight",
+    "steps": [
+      "Immediately remove and destroy infected plants and nearby debris.",
+      "Apply labeled fungicides on a tight schedule when outbreaks are detected.",
+      "Stake or cage plants to keep foliage off the ground and improve airflow.",
+      "Avoid working in fields when foliage is wet to prevent spreading spores."
+    ],
+    "prevention": [
+      "Use disease-free transplants and avoid saving seed from infected plants.",
+      "Water at the base of plants and avoid overhead irrigation.",
+      "Provide adequate spacing between plants for good air circulation.",
+      "Monitor weather forecasts and scout frequently during cool, wet periods."
+    ],
+    "expertNote": "Tomato late blight can destroy foliage and fruit rapidly; early detection and immediate action greatly improve control.",
+    "severity": "High"
+  },
+  "Tomato___healthy": {
+    "disease": "Tomato Healthy",
+    "steps": [
+      "Maintain consistent watering, keeping soil moist but not waterlogged.",
+      "Fertilize according to soil test recommendations.",
+      "Mulch around plants to conserve moisture and reduce soil splashing.",
+      "Prune lower leaves to improve airflow and reduce disease risk."
+    ],
+    "prevention": [
+      "Rotate out of tomatoes and other solanaceous crops every few years.",
+      "Inspect plants weekly for early signs of pests or disease.",
+      "Sanitize tools between plants, especially after pruning.",
+      "Choose varieties adapted to your climate and disease pressure."
+    ],
+    "expertNote": "Healthy tomato plants are resilient but still require regular monitoring and good cultural practices to stay productive.",
+    "severity": "Low"
+  },
+  "Soybean___healthy": {
+    "disease": "Soybean Healthy",
+    "steps": [
+      "Follow recommended seeding rates to avoid overly dense stands.",
+      "Apply balanced fertilization based on soil testing.",
+      "Manage weeds to reduce competition and pest habitat.",
+      "Irrigate only when necessary and avoid prolonged saturated soils."
+    ],
+    "prevention": [
+      "Rotate crops to reduce disease and nematode buildup.",
+      "Use high-quality, treated seed with good germination.",
+      "Select resistant varieties for local disease challenges.",
+      "Scout fields at key growth stages for emerging issues."
+    ],
+    "expertNote": "Even healthy soybeans benefit from proactive scouting and crop rotation to prevent future disease problems.",
+    "severity": "Low"
+  }
+}
+

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload Validation Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #2b2d31;
+            color: white;
+        }
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .success { color: #4CAF50; }
+        .error { color: #F44336; }
+        input[type="file"] {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Upload Validation Test</h1>
+    
+    <div class="test-section">
+        <h2>Test 1: Valid Image Upload</h2>
+        <p>Upload a valid JPEG or PNG image under 16MB</p>
+        <input type="file" id="test1-input" accept="image/*">
+        <button onclick="testValidation('test1-input', 'test1-result')">Test Validation</button>
+        <div id="test1-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 2: Invalid File Type</h2>
+        <p>Try uploading a non-image file (PDF, TXT, etc.)</p>
+        <input type="file" id="test2-input">
+        <button onclick="testValidation('test2-input', 'test2-result')">Test Validation</button>
+        <div id="test2-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 3: File Size Check</h2>
+        <p>File size validation (max 16MB)</p>
+        <input type="file" id="test3-input" accept="image/*">
+        <button onclick="testValidation('test3-input', 'test3-result')">Test Validation</button>
+        <div id="test3-result" class="result"></div>
+    </div>
+
+    <script>
+        function testValidation(inputId, resultId) {
+            const input = document.getElementById(inputId);
+            const result = document.getElementById(resultId);
+            const file = input.files[0];
+            
+            if (!file) {
+                result.innerHTML = '<span class="error">❌ No file selected</span>';
+                return;
+            }
+            
+            result.innerHTML = `<strong>File Info:</strong><br>
+                Name: ${file.name}<br>
+                Type: ${file.type}<br>
+                Size: ${(file.size / 1024 / 1024).toFixed(2)} MB<br><br>`;
+            
+            // Validate file type
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+            if (!validTypes.includes(file.type.toLowerCase())) {
+                result.innerHTML += '<span class="error">❌ FAILED: Invalid file type. Please upload JPG or PNG.</span>';
+                return;
+            }
+            
+            // Validate file size (max 16MB)
+            const maxSize = 16 * 1024 * 1024;
+            if (file.size > maxSize) {
+                result.innerHTML += '<span class="error">❌ FAILED: File size exceeds 16MB limit.</span>';
+                return;
+            }
+            
+            result.innerHTML += '<span class="success">✅ PASSED: File validation successful!</span>';
+        }
+    </script>
+</body>
+</html>

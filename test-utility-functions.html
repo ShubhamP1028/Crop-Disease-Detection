@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utility Functions Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .pass {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .fail {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Camera Screen Utility Functions Test</h1>
+    
+    <div id="test-results"></div>
+
+    <script>
+        // Mock CameraScreen class with utility functions
+        class CameraScreen {
+            /**
+             * Generate UUID v4 for unique scan identifiers
+             * @returns {string} UUID string
+             */
+            generateUUID() {
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    const r = Math.random() * 16 | 0;
+                    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+            }
+            
+            /**
+             * Extract plant type from PlantVillage disease label format
+             * @param {string} diseaseLabel - Disease label in format "PlantName___DiseaseName"
+             * @returns {string} Plant type with spaces
+             */
+            extractPlantType(diseaseLabel) {
+                // Split by "___" separator
+                const parts = diseaseLabel.split('___');
+                
+                // Get plant name (first part) and replace underscores with spaces
+                const plantName = parts[0].replace(/_/g, ' ');
+                
+                return plantName;
+            }
+            
+            /**
+             * Calculate risk level based on confidence and disease type
+             * @param {number} confidence - Confidence score (0.0 to 1.0)
+             * @param {string} disease - Disease name
+             * @returns {string} Risk level: "Low", "Medium", or "High"
+             */
+            calculateRiskLevel(confidence, disease) {
+                // Check if plant is healthy
+                if (disease.toLowerCase().includes('healthy')) {
+                    return 'Low';
+                }
+                
+                // High-severity diseases based on PlantVillage dataset
+                const highSeverityDiseases = [
+                    'Late_blight',
+                    'Black_rot',
+                    'Haunglongbing',
+                    'Esca',
+                    'Northern_Leaf_Blight'
+                ];
+                
+                // Check if disease is high severity
+                const isHighSeverity = highSeverityDiseases.some(severeDiseasePattern => 
+                    disease.includes(severeDiseasePattern)
+                );
+                
+                // Calculate risk based on confidence and severity
+                if (isHighSeverity && confidence >= 0.7) {
+                    return 'High';
+                } else if (confidence >= 0.8) {
+                    return 'Medium';
+                } else {
+                    return 'Low';
+                }
+            }
+            
+            /**
+             * Fetch treatment data for a specific disease
+             * @param {string} disease - Disease name
+             * @returns {Promise<object>} Treatment information object
+             */
+            async fetchTreatmentData(disease) {
+                // For testing, return fallback data immediately
+                return {
+                    disease: disease,
+                    steps: [
+                        'Remove affected leaves immediately',
+                        'Apply appropriate fungicide or treatment',
+                        'Improve air circulation around plants',
+                        'Monitor plant regularly for recurrence'
+                    ],
+                    prevention: [
+                        'Maintain proper plant spacing',
+                        'Water at base of plant, avoid wetting leaves',
+                        'Practice crop rotation',
+                        'Use disease-resistant varieties'
+                    ],
+                    expertNote: 'Early detection and prompt action are key to managing plant diseases effectively.',
+                    severity: 'Medium'
+                };
+            }
+        }
+
+        // Test runner
+        const camera = new CameraScreen();
+        const resultsDiv = document.getElementById('test-results');
+
+        function addTestResult(sectionTitle, testName, passed, details) {
+            let section = document.querySelector(`[data-section="${sectionTitle}"]`);
+            if (!section) {
+                section = document.createElement('div');
+                section.className = 'test-section';
+                section.setAttribute('data-section', sectionTitle);
+                section.innerHTML = `<h2>${sectionTitle}</h2>`;
+                resultsDiv.appendChild(section);
+            }
+            
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `test-result ${passed ? 'pass' : 'fail'}`;
+            resultDiv.innerHTML = `
+                <strong>${passed ? '✓' : '✗'} ${testName}</strong>
+                <pre>${details}</pre>
+            `;
+            section.appendChild(resultDiv);
+        }
+
+        // Test 1: generateUUID()
+        function testGenerateUUID() {
+            const uuid1 = camera.generateUUID();
+            const uuid2 = camera.generateUUID();
+            
+            // Test UUID format
+            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+            const formatValid = uuidRegex.test(uuid1);
+            addTestResult('generateUUID()', 'UUID format validation', formatValid, 
+                `Generated UUID: ${uuid1}\nMatches UUID v4 format: ${formatValid}`);
+            
+            // Test uniqueness
+            const isUnique = uuid1 !== uuid2;
+            addTestResult('generateUUID()', 'UUID uniqueness', isUnique,
+                `UUID 1: ${uuid1}\nUUID 2: ${uuid2}\nUnique: ${isUnique}`);
+        }
+
+        // Test 2: extractPlantType()
+        function testExtractPlantType() {
+            const tests = [
+                { input: 'Tomato___Late_blight', expected: 'Tomato' },
+                { input: 'Apple___Black_rot', expected: 'Apple' },
+                { input: 'Corn___Northern_Leaf_Blight', expected: 'Corn' },
+                { input: 'Potato___healthy', expected: 'Potato' },
+                { input: 'Bell_Pepper___Bacterial_spot', expected: 'Bell Pepper' }
+            ];
+            
+            tests.forEach(test => {
+                const result = camera.extractPlantType(test.input);
+                const passed = result === test.expected;
+                addTestResult('extractPlantType()', `Extract from "${test.input}"`, passed,
+                    `Input: ${test.input}\nExpected: ${test.expected}\nGot: ${result}`);
+            });
+        }
+
+        // Test 3: calculateRiskLevel()
+        function testCalculateRiskLevel() {
+            const tests = [
+                // Healthy plants should always be Low
+                { confidence: 0.95, disease: 'Tomato___healthy', expected: 'Low', desc: 'Healthy plant (high confidence)' },
+                { confidence: 0.5, disease: 'Apple___healthy', expected: 'Low', desc: 'Healthy plant (low confidence)' },
+                
+                // High-severity diseases with high confidence
+                { confidence: 0.85, disease: 'Tomato___Late_blight', expected: 'High', desc: 'Late blight with 85% confidence' },
+                { confidence: 0.7, disease: 'Apple___Black_rot', expected: 'High', desc: 'Black rot with 70% confidence' },
+                { confidence: 0.9, disease: 'Citrus___Haunglongbing', expected: 'High', desc: 'Haunglongbing with 90% confidence' },
+                
+                // High-severity diseases with lower confidence
+                { confidence: 0.65, disease: 'Tomato___Late_blight', expected: 'Low', desc: 'Late blight with 65% confidence' },
+                
+                // Medium-severity diseases with high confidence
+                { confidence: 0.85, disease: 'Tomato___Bacterial_spot', expected: 'Medium', desc: 'Bacterial spot with 85% confidence' },
+                
+                // Low confidence diseases
+                { confidence: 0.6, disease: 'Tomato___Bacterial_spot', expected: 'Low', desc: 'Bacterial spot with 60% confidence' },
+                { confidence: 0.4, disease: 'Apple___Cedar_rust', expected: 'Low', desc: 'Cedar rust with 40% confidence' }
+            ];
+            
+            tests.forEach(test => {
+                const result = camera.calculateRiskLevel(test.confidence, test.disease);
+                const passed = result === test.expected;
+                addTestResult('calculateRiskLevel()', test.desc, passed,
+                    `Disease: ${test.disease}\nConfidence: ${test.confidence}\nExpected: ${test.expected}\nGot: ${result}`);
+            });
+        }
+
+        // Test 4: fetchTreatmentData()
+        async function testFetchTreatmentData() {
+            const disease = 'Tomato___Late_blight';
+            const treatment = await camera.fetchTreatmentData(disease);
+            
+            // Check structure
+            const hasRequiredFields = 
+                treatment.disease &&
+                Array.isArray(treatment.steps) &&
+                Array.isArray(treatment.prevention) &&
+                treatment.expertNote &&
+                treatment.severity;
+            
+            addTestResult('fetchTreatmentData()', 'Returns valid treatment object', hasRequiredFields,
+                `Disease: ${disease}\nStructure valid: ${hasRequiredFields}\n` +
+                `Has steps: ${treatment.steps?.length || 0}\n` +
+                `Has prevention: ${treatment.prevention?.length || 0}\n` +
+                `Has expertNote: ${!!treatment.expertNote}\n` +
+                `Has severity: ${!!treatment.severity}`);
+            
+            // Check minimum content
+            const hasMinimumContent = 
+                treatment.steps.length >= 1 &&
+                treatment.prevention.length >= 1;
+            
+            addTestResult('fetchTreatmentData()', 'Has minimum required content', hasMinimumContent,
+                `Steps count: ${treatment.steps.length} (minimum: 1)\n` +
+                `Prevention count: ${treatment.prevention.length} (minimum: 1)`);
+        }
+
+        // Run all tests
+        async function runAllTests() {
+            testGenerateUUID();
+            testExtractPlantType();
+            testCalculateRiskLevel();
+            await testFetchTreatmentData();
+            
+            // Summary
+            const allResults = document.querySelectorAll('.test-result');
+            const passed = document.querySelectorAll('.test-result.pass').length;
+            const failed = document.querySelectorAll('.test-result.fail').length;
+            
+            const summary = document.createElement('div');
+            summary.className = 'test-section';
+            summary.innerHTML = `
+                <h2>Test Summary</h2>
+                <p><strong>Total Tests:</strong> ${allResults.length}</p>
+                <p><strong>Passed:</strong> ${passed}</p>
+                <p><strong>Failed:</strong> ${failed}</p>
+                <p><strong>Success Rate:</strong> ${((passed / allResults.length) * 100).toFixed(1)}%</p>
+            `;
+            resultsDiv.insertBefore(summary, resultsDiv.firstChild);
+        }
+
+        runAllTests();
+    </script>
+</body>
+</html>

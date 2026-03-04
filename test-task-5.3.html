@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 5.3 Test - Treatment and Risk Visualization</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #2b2d31;
+            color: white;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        .test-result {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .pass {
+            background: rgba(76, 175, 80, 0.3);
+            border-left: 4px solid #4CAF50;
+        }
+        .fail {
+            background: rgba(244, 67, 54, 0.3);
+            border-left: 4px solid #F44336;
+        }
+        #treatment-list {
+            list-style: none;
+            padding: 0;
+        }
+        #treatment-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+        }
+        #treatment-list li i {
+            color: #4CAF50;
+            margin-right: 8px;
+        }
+        .risk-bar-container {
+            position: relative;
+            height: 8px;
+            background: linear-gradient(to right, #4CAF50, #FFC107, #F44336);
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .risk-marker {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: left 0.5s ease-in-out;
+        }
+        .risk-marker.low {
+            background: #4CAF50;
+        }
+        .risk-marker.medium {
+            background: #FFC107;
+        }
+        .risk-marker.high {
+            background: #F44336;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task 5.3 Test - Treatment and Risk Visualization</h1>
+    
+    <div class="test-section">
+        <h2>Test 1: renderTreatmentSection()</h2>
+        <div id="test1-results"></div>
+        <h3>Treatment List Output:</h3>
+        <ul id="treatment-list"></ul>
+    </div>
+    
+    <div class="test-section">
+        <h2>Test 2: renderRiskIndicator()</h2>
+        <div id="test2-results"></div>
+        <h3>Risk Indicator Output:</h3>
+        <div class="risk-bar-container">
+            <div class="risk-marker low" id="risk-marker"></div>
+        </div>
+        <p>Marker Position: <span id="marker-position">Not set</span></p>
+        <p>Marker Class: <span id="marker-class">Not set</span></p>
+    </div>
+
+    <script>
+        // Mock StateManager and NavigationManager
+        class StateManager {
+            constructor() {
+                this.currentScan = null;
+            }
+            getCurrentScan() {
+                return this.currentScan;
+            }
+            setCurrentScan(scan) {
+                this.currentScan = scan;
+            }
+        }
+
+        class NavigationManager {
+            navigateTo(screen) {
+                console.log('Navigate to:', screen);
+            }
+        }
+
+        // Import ResultScreen methods
+        class ResultScreen {
+            constructor(stateManager, navigationManager) {
+                this.stateManager = stateManager;
+                this.navigationManager = navigationManager;
+            }
+
+            renderTreatmentSection(treatment) {
+                const treatmentList = document.getElementById('treatment-list');
+                
+                if (!treatmentList) {
+                    console.error('Treatment list element not found');
+                    return;
+                }
+                
+                // Clear existing content
+                treatmentList.innerHTML = '';
+                
+                // Add treatment steps
+                if (treatment.steps && treatment.steps.length > 0) {
+                    treatment.steps.forEach(step => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<i class="fas fa-check-circle"></i> ${step}`;
+                        treatmentList.appendChild(li);
+                    });
+                }
+                
+                // Add prevention tips
+                if (treatment.prevention && treatment.prevention.length > 0) {
+                    // Add a separator or subheading if desired
+                    const preventionHeader = document.createElement('li');
+                    preventionHeader.innerHTML = '<strong>Prevention:</strong>';
+                    preventionHeader.style.marginTop = '12px';
+                    preventionHeader.style.listStyle = 'none';
+                    treatmentList.appendChild(preventionHeader);
+                    
+                    treatment.prevention.forEach(tip => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<i class="fas fa-check-circle"></i> ${tip}`;
+                        treatmentList.appendChild(li);
+                    });
+                }
+            }
+
+            renderRiskIndicator(confidence, riskLevel) {
+                const riskMarker = document.getElementById('risk-marker');
+                
+                if (!riskMarker) {
+                    console.error('Risk marker element not found');
+                    return;
+                }
+                
+                // Calculate marker position based on confidence (0-100%)
+                const position = confidence * 100;
+                
+                // Position marker (accounting for marker width to center it)
+                riskMarker.style.left = `${position}%`;
+                
+                // Remove all risk level classes
+                riskMarker.classList.remove('low', 'medium', 'high');
+                
+                // Add appropriate risk level class
+                riskMarker.classList.add(riskLevel.toLowerCase());
+            }
+        }
+
+        // Run tests
+        function runTests() {
+            const stateManager = new StateManager();
+            const navigationManager = new NavigationManager();
+            const resultScreen = new ResultScreen(stateManager, navigationManager);
+
+            // Test 1: renderTreatmentSection
+            console.log('Running Test 1: renderTreatmentSection()');
+            const testTreatment = {
+                steps: [
+                    'Remove infected leaves immediately',
+                    'Apply copper-based fungicide',
+                    'Improve air circulation around plants'
+                ],
+                prevention: [
+                    'Water plants at base, not leaves',
+                    'Space plants properly for airflow',
+                    'Use disease-resistant varieties'
+                ]
+            };
+
+            resultScreen.renderTreatmentSection(testTreatment);
+
+            // Verify treatment list
+            const treatmentList = document.getElementById('treatment-list');
+            const listItems = treatmentList.querySelectorAll('li');
+            const test1Results = document.getElementById('test1-results');
+
+            let test1Pass = true;
+            let test1Messages = [];
+
+            // Check if list items were created
+            if (listItems.length === 7) { // 3 steps + 1 header + 3 prevention
+                test1Messages.push('✓ Correct number of list items created (7)');
+            } else {
+                test1Pass = false;
+                test1Messages.push(`✗ Expected 7 list items, got ${listItems.length}`);
+            }
+
+            // Check if checkmark icons are present
+            const icons = treatmentList.querySelectorAll('i.fa-check-circle');
+            if (icons.length === 6) { // 3 steps + 3 prevention
+                test1Messages.push('✓ Checkmark icons added correctly (6)');
+            } else {
+                test1Pass = false;
+                test1Messages.push(`✗ Expected 6 checkmark icons, got ${icons.length}`);
+            }
+
+            // Check if prevention header exists
+            const preventionHeader = Array.from(listItems).find(li => li.innerHTML.includes('Prevention:'));
+            if (preventionHeader) {
+                test1Messages.push('✓ Prevention header added');
+            } else {
+                test1Pass = false;
+                test1Messages.push('✗ Prevention header not found');
+            }
+
+            test1Results.innerHTML = test1Messages.map(msg => 
+                `<div class="test-result ${test1Pass ? 'pass' : 'fail'}">${msg}</div>`
+            ).join('');
+
+            // Test 2: renderRiskIndicator
+            console.log('Running Test 2: renderRiskIndicator()');
+            const testCases = [
+                { confidence: 0.25, riskLevel: 'Low', expectedPosition: '25%' },
+                { confidence: 0.65, riskLevel: 'Medium', expectedPosition: '65%' },
+                { confidence: 0.90, riskLevel: 'High', expectedPosition: '90%' }
+            ];
+
+            const test2Results = document.getElementById('test2-results');
+            let test2Messages = [];
+            let test2Pass = true;
+
+            testCases.forEach((testCase, index) => {
+                setTimeout(() => {
+                    resultScreen.renderRiskIndicator(testCase.confidence, testCase.riskLevel);
+                    
+                    const riskMarker = document.getElementById('risk-marker');
+                    const actualPosition = riskMarker.style.left;
+                    const actualClass = riskMarker.classList.contains(testCase.riskLevel.toLowerCase());
+
+                    if (actualPosition === testCase.expectedPosition) {
+                        test2Messages.push(`✓ Test ${index + 1}: Marker position correct (${actualPosition})`);
+                    } else {
+                        test2Pass = false;
+                        test2Messages.push(`✗ Test ${index + 1}: Expected ${testCase.expectedPosition}, got ${actualPosition}`);
+                    }
+
+                    if (actualClass) {
+                        test2Messages.push(`✓ Test ${index + 1}: Risk level class '${testCase.riskLevel.toLowerCase()}' applied`);
+                    } else {
+                        test2Pass = false;
+                        test2Messages.push(`✗ Test ${index + 1}: Risk level class '${testCase.riskLevel.toLowerCase()}' not applied`);
+                    }
+
+                    // Update display
+                    document.getElementById('marker-position').textContent = actualPosition;
+                    document.getElementById('marker-class').textContent = Array.from(riskMarker.classList).join(', ');
+
+                    if (index === testCases.length - 1) {
+                        test2Results.innerHTML = test2Messages.map(msg => 
+                            `<div class="test-result ${test2Pass ? 'pass' : 'fail'}">${msg}</div>`
+                        ).join('');
+                    }
+                }, index * 1000);
+            });
+        }
+
+        // Run tests when page loads
+        window.addEventListener('DOMContentLoaded', runTests);
+    </script>
+</body>
+</html>
